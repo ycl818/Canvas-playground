@@ -68,6 +68,13 @@ window.addEventListener('mousemove', function(e) {
   console.log(mouse);
 })
 
+window.addEventListener('resize', function(){
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight  
+
+  init();
+})
+
 function Circle(x, y, dx, dy, radius) {
   this.x = x;
   this.y = y;
@@ -114,17 +121,18 @@ function Circle(x, y, dx, dy, radius) {
 
 let circleArray = [];
 
-for (let i = 0; i < 800; i++) {
-  let radius = Math.random() * 3 + 1;
-  let x = Math.random() * (innerWidth - radius * 2) + radius;
-  let y = Math.random() * (innerHeight - radius * 2) + radius;
-  let dx = (Math.random() - 0.5) ;
-  let dy = (Math.random() - 0.5) ;
-  
-  circleArray.push(new Circle(x, y, dx, dy, radius))
-  
+function init() {
+  circleArray = [];
+  for (let i = 0; i < 800; i++) {
+    let radius = Math.random() * 3 + 1;
+    let x = Math.random() * (innerWidth - radius * 2) + radius;
+    let y = Math.random() * (innerHeight - radius * 2) + radius;
+    let dx = (Math.random() - 0.5) ;
+    let dy = (Math.random() - 0.5) ;
+    
+    circleArray.push(new Circle(x, y, dx, dy, radius))
+  }
 }
-
 
 function animate() {
   requestAnimationFrame(animate);
@@ -135,4 +143,5 @@ function animate() {
   }
 }
 
-//animate();
+init();
+animate();
