@@ -46,6 +46,18 @@ const c = canvas.getContext('2d');
 // let dy = (Math.random() - 0.5) * 8;
 // let radius = 30;
 
+let mouse = {
+  x: undefined,
+  y: undefined
+}
+
+const maxRadius = 40;
+
+window.addEventListener('mousemove', function(e) {
+  mouse.x = e.x;
+  mouse.y = e.y;
+  console.log(mouse);
+})
 
 function Circle(x, y, dx, dy, radius) {
   this.x = x;
@@ -59,6 +71,7 @@ function Circle(x, y, dx, dy, radius) {
     c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     c.strokeStyle = "green"
     c.stroke();
+    c.fill();
   }
 
   this.update = function() {
@@ -71,6 +84,18 @@ function Circle(x, y, dx, dy, radius) {
     this.x += this.dx;
     this.y += this.dy;
 
+    // interactive
+    if (mouse.x - this.x < 50 && mouse.x - this.x > -50
+        && mouse.y - this.y < 50 && mouse.y - this.y > -50
+      ) {
+      if (this.radius < maxRadius) {
+        this.radius += 1;
+      } else if (this.radius > 2) {
+        this.radius -= 1;
+      }
+      
+    }
+
     this.draw();
   }
 }
@@ -79,7 +104,7 @@ function Circle(x, y, dx, dy, radius) {
 
 let circleArray = [];
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 20; i++) {
   let radius = 30;
   let x = Math.random() * (innerWidth - radius * 2) + radius;
   let y = Math.random() * (innerHeight - radius * 2) + radius;
@@ -100,4 +125,4 @@ function animate() {
   }
 }
 
-animate();
+//animate();
